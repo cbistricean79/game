@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+		
+body {
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+.red-button {
+    background: radial-gradient(circle at center, #ff0000, #b30000); /* Tightened gradient */
+    border: 5px solid #5a0000;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    color: white;
+    font-size: 60px;
+    font-weight: bold;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-shadow: 3px 5px 6px rgba(0, 0, 0, 0.8); /* Increased shadow size and opacity */
+}
+
+.red-button:before {
+    content: "";
+    position: absolute;
+    top: 15%; /* Adjusted highlight position */
+    left: 15%;
+    width: 70%; /* Adjusted highlight size */
+    height: 70%;
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6), transparent); /* Adjusted highlight gradient */
+    border-radius: 50%;
+}
+
+.red-button:active {
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    transform: translateY(4px);
+}
+
+.fancy-box {
+    display: none;
+    margin-top: 20px;
+    padding: 20px;
+    border: 2px solid #000;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+}
+.question {
+    margin-bottom: 10px;
+}
+
+.question p {
+    font-size: 24px; /* Increased font size */
+    font-weight: bold; /* Bold text */
+}
+
+.answers {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    width: 45%;
+}
+
+.option {
+    cursor: pointer;
+}
+
+.countdown {
+    font-weight: bold;
+}
+
+.title {
+    font-size: 36px; /* Large font size */
+    font-weight: bold; /* Bold text */
+    color: #333; /* Dark color */
+    text-align: center; /* Centered text */
+    margin-bottom: 20px; /* Space below the title */
+}
+
+/* ... other styles remain the same ... */
+This code adds the title "Chicago Challenge Questions" above the button, styled with a large font size, bold text, and centered alignment. The dark color and margin below the title provide a nice separation from the
+
+
+
+		
+	</style>
+    <title>Red Button</title>
+</head>
+<body>
+    <div class="container">
+        <h1 class="title">Chicago Challenge Questions</h1>
+		<button class="red-button" onclick="pressButton()">DO NOT<br />PRESS</button>
+<div class="fancy-box" id="fancyBox">
+    <div class="question" id="question"></div>
+    <div class="answers" id="answers">
+        <div class="column" id="column1"></div>
+        <div class="column" id="column2"></div>
+    </div>
+    <div class="countdown" id="countdown"></div>
+</div>
+    </div>
+	
+<script>
+	
+const questions = [
+    { question: "What Lake does Chicago Reside on?", answer: "Lake Michigan", options: ["Lake Erie", "Lake Superior", "Lake Huron"] },
+    { question: "When was Chicago incorporated into a city?", answer: "1837", options: ["1820", "1845", "1853"] },
+    { question: "When was the Great Chicago Fire?", answer: "1871", options: ["1865", "1880", "1892"] },
+    { question: "What time zone is Chicago in?", answer: "Central", options: ["Eastern", "Mountain", "Pacific"] },
+    { question: "What is one of the major universities in the area?", answer: "Northwestern and University of Illinois Chicago, University of Chicago", options: ["Harvard", "Yale", "Stanford"] },
+    { question: "What part of the US is Chicago in?", answer: "Midwest", options: ["South", "West", "Northeast"] },
+    { question: "What is the capital of Illinois?", answer: "Springfield", options: ["Chicago", "Peoria", "Rockford"] },
+    { question: "What is Chicago's nickname?", answer: "The windy City", options: ["The Big Apple", "The Golden City", "The City of Broad Shoulders"] },
+    { question: "What is Chicago's tallest building?", answer: "Willis Tower", options: ["John Hancock Center", "Trump Tower", "Aon Center"] },
+    { question: "What is the famous Chicago food item known as the 'depression sandwich'?", answer: "Chicago Style Hotdog", options: ["Deep Dish Pizza", "Italian Beef Sandwich", "Jibarito"] },
+    { question: "The Chicago River is known for a unique St. Patrick's Days tradition, What is it?", answer: "They dye it green", options: ["They fill it with shamrocks", "They play Irish music", "They release goldfish"] }
+];
+
+function pressButton() {
+    const randomQuestion = questions[Math.floor(Math.random() * questions.length)];
+    const options = [...randomQuestion.options, randomQuestion.answer].sort(() => Math.random() - 0.5);
+    const questionDiv = document.getElementById('question');
+    questionDiv.innerHTML = `<p><strong>${randomQuestion.question}</strong></p>`;
+    
+    const column1 = document.getElementById('column1');
+    const column2 = document.getElementById('column2');
+    column1.innerHTML = `<p class="option">1. ${options[0] === randomQuestion.answer ? `<span class="correct">${options[0]}</span>` : options[0]}</p>`;
+    column1.innerHTML += `<p class="option">3. ${options[2] === randomQuestion.answer ? `<span class="correct">${options[2]}</span>` : options[2]}</p>`;
+    column2.innerHTML = `<p class="option">2. ${options[1] === randomQuestion.answer ? `<span class="correct">${options[1]}</span>` : options[1]}</p>`;
+    column2.innerHTML += `<p class="option">4. ${options[3] === randomQuestion.answer ? `<span class="correct">${options[3]}</span>` : options[3]}</p>`;
+    
+    document.getElementById('fancyBox').style.display = 'block';
+
+    let countdown = 10;
+    const countdownDiv = document.getElementById('countdown');
+    countdownDiv.innerHTML = `Time remaining: ${countdown} seconds`;
+    const interval = setInterval(() => {
+        countdown--;
+        countdownDiv.innerHTML = `Time remaining: ${countdown} seconds`;
+        if (countdown === 0) {
+            clearInterval(interval);
+            document.querySelector('.correct').style.color = "green";
+            document.querySelector('.correct').style.fontWeight = "bold";
+        }
+    }, 1000);
+}
+
+
+
+</script>
+	
+</body>
+</html>
