@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Flash Cards</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #111;
+            color: #fff;
+        }
+        #card {
+            border: 2px solid #fff;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #222;
+        }
+        #question {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        #answer {
+            display: none;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        button {
+            margin-top: 15px;
+            padding: 8px 12px;
+            border: none;
+            background-color: #444;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div id="card">
+        <div id="question"></div>
+        <div id="answer"></div>
+        <button id="toggle">Show Answer</button>
+    </div>
+
+<script>
+const cards = [
+    {q: 'What is the Moon\'s average distance from Earth?', a: 'About 384,400 km'},
+    {q: 'What causes the phases of the Moon?', a: 'The relative positions of Earth, Moon, and Sun'},
+    {q: 'How long is a lunar day?', a: 'About 29.5 Earth days'},
+    {q: 'What is the dark, flat areas on the Moon called?', a: 'Maria or seas'},
+    {q: 'Who was the first person to walk on the Moon?', a: 'Neil Armstrong in 1969'},
+];
+let index = 0;
+const questionEl = document.getElementById('question');
+const answerEl = document.getElementById('answer');
+const toggleBtn = document.getElementById('toggle');
+
+function showCard() {
+    const card = cards[index];
+    questionEl.textContent = card.q;
+    answerEl.textContent = card.a;
+    answerEl.style.display = 'none';
+    toggleBtn.textContent = 'Show Answer';
+}
+
+showCard();
+
+toggleBtn.addEventListener('click', () => {
+    if (answerEl.style.display === 'none') {
+        answerEl.style.display = 'block';
+        toggleBtn.textContent = 'Next Card';
+    } else {
+        index = (index + 1) % cards.length;
+        showCard();
+    }
+});
+</script>
+</body>
+</html>
